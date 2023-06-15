@@ -1,4 +1,5 @@
 import config.TestConfig;
+import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 
 import static constants.Constants.Actions.*;
@@ -64,7 +65,7 @@ public class JsonPlaceHolderTest extends TestConfig {
                 "}";
         given()
                 .body(postBodyJson)
-                .log().uri()
+                .log().all()
                 .when().post(JSON_PLACE_HOLDER_POST)
                 .then()
                 .log().body()
@@ -72,7 +73,7 @@ public class JsonPlaceHolderTest extends TestConfig {
     }
 
     @Test
-    public void PostWithXML() {
+    protected void PostWithXML() {
 
         /**XML from https://www.tutorialspoint.com/online_xml_editor.htm
          * XML service https://pipedream.com/workflows*/
@@ -92,8 +93,9 @@ public class JsonPlaceHolderTest extends TestConfig {
                 "\t\t\t</Company>";
 
         given()
+                .spec(requestSpecificationXml)
                 .body(postXMLBody)
-                .log().uri()
+                .log().all()
                 .when().post(XML_REQUEST_BIN_POST)
                 .then()
                 .log().body()
