@@ -32,5 +32,7 @@ public class Constants {
          * json place holder
          */
         public static String JSON_PLACE_HOLDER_GET = "comments/";
+        public static String JSON_PLACE_HOLDER_PUT = "posts/1/";
+        public static String JSON_PLACE_HOLDER_DELETE = "posts/1/";
     }
 }
