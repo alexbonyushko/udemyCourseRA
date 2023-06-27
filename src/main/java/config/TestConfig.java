@@ -25,6 +25,7 @@ import java.util.Map;
 
 import static constants.Constants.RunVariable.server;
 import static constants.Constants.RunVariable.path;
+import static constants.Constants.Servers.SWAPI_URL;
 import static constants.Constants.Servers.XML_REQUEST_BIN_URL;
 
 public class TestConfig {
@@ -50,6 +51,11 @@ public class TestConfig {
            .build();
    protected ResponseSpecification responseSpecificationForPost = new ResponseSpecBuilder()
            .expectStatusCode(201)
+           .build();
+
+   /**спецификация для тест swapi*/
+   protected RequestSpecification requestSpecificationForSwapiTests = new RequestSpecBuilder()
+           .setBaseUri(SWAPI_URL)
            .build();
 
 
