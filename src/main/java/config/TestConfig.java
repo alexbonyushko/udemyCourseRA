@@ -1,6 +1,7 @@
 package config;
 
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
 import io.restassured.http.*;
@@ -28,22 +29,34 @@ import static constants.Constants.Servers.XML_REQUEST_BIN_URL;
 
 public class TestConfig {
 
-    /**уникальная спецификация для запроса*/
-    protected RequestSpecification requestSpecificationXml = new RequestSpecBuilder() /**&#x443;&#x43D;&#x438;&#x43A;&#x430;&#x43B;&#x44C;&#x43D;&#x430;&#x44F; &#x441;&#x43F;&#x435;&#x446;&#x438;&#x444;&#x438;&#x43A;&#x430;&#x446;&#x438;&#x44F; &#x434;&#x43B;&#x44F; &#x437;&#x430;&#x43F;&#x440;&#x43E;&#x441;&#x430;*/
+    /**
+     * уникальная спецификация для запроса
+     */
+    protected RequestSpecification requestSpecificationXml = new RequestSpecBuilder()
             .addHeader("Content-Type", "application/xml")
             .addCookie("testCokieXML")
             .setBaseUri(XML_REQUEST_BIN_URL)
-            .build(); /**уникальная спецификация для запроса*/
+            .build();
+
+    /**общая спецификация для запроса*/
+   protected RequestSpecification requestSpecificationJson = new RequestSpecBuilder()
+            .addHeader("Content-Type", "application/json")
+            .addCookie("testCokieJSON")
+            .build();
+
+    /**общая спецификация для ответа, для вынесения общих признаков и общих проверок для всех тестов*/
+   protected ResponseSpecification responseSpecificationForGet = new ResponseSpecBuilder()
+           .expectStatusCode(200)
+           .build();
+   protected ResponseSpecification responseSpecificationForPost = new ResponseSpecBuilder()
+           .expectStatusCode(201)
+           .build();
+
 
     @BeforeClass
     public void setUp() {
         RestAssured.baseURI = server;
         RestAssured.basePath = path;
-        /**общая спецификация для запроса*/
-        RequestSpecification requestSpecificationJson = new RequestSpecBuilder()
-                .addHeader("Content-Type", "application/json")
-                .addCookie("testCokieJSON")
-                .build();
-        RestAssured.requestSpecification = requestSpecificationJson;
+
     }
 }
