@@ -9,6 +9,7 @@ import static constants.Constants.Actions.SWAPI_GET_PEOPLE;
 import static constants.Constants.Path.SWAPI_PATH;
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
 
@@ -138,6 +139,19 @@ public class FirstTest extends TestConfig {
                 .get("https://maps.googleapis.com/maps/api/place/findplacefromtext/xml?key=___&input=New York&inputtype=textquery&fields=formatted_address,geometry,icon,name,photo,place_id,plus_code,type&language=en")//в значение key необходимо передать ключ который мы сгенерировали в ЛК Goggle Place API
                 .then()
                 .body(matchesXsdInClasspath("xmlSchema.xsd"))
+                .log()
+                .body();
+    }
+
+    @Test
+    public void validateJsonExample() {
+        given()
+                .log()
+                .uri()
+                .when()
+                .get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=___&input=New York&inputtype=textquery&fields=formatted_address,geometry,icon,name,photo,place_id,plus_code,type&language=en")//в значение key необходимо передать ключ который мы сгенерировали в ЛК Goggle Place API
+                .then()
+                .body(matchesJsonSchemaInClasspath("jsonSchema.json"))
                 .log()
                 .body();
     }
