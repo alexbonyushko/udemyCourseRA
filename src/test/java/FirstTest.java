@@ -1,5 +1,9 @@
 import config.TestConfig;
+import io.restassured.http.Headers;
+import io.restassured.response.Response;
 import org.testng.annotations.Test;
+
+import java.util.Map;
 
 import static constants.Constants.Actions.SWAPI_GET_PEOPLE;
 import static constants.Constants.Path.SWAPI_PATH;
@@ -76,4 +80,53 @@ public class FirstTest extends TestConfig {
                 .log()
                 .body();
     }
+
+    @Test
+    public void getAllDataFromRequest() {
+        Response response =
+                given()
+                        .spec(requestSpecificationForSwapiTests)
+                        .when()
+                        .get(SWAPI_PATH)
+                        .then()
+                        .extract()
+                        .response();
+        String jsonResponseString = response.asString();
+        System.out.println(jsonResponseString);
+    }
+
+    @Test
+    public void getCookieFromResponse() {
+        Response response =
+                given()
+                        .spec(requestSpecificationForSwapiTests)
+                        .when()
+                        .get(SWAPI_PATH)
+                        .then()
+                        .extract() //вытаскиваем необходимые нам параметры из тела ответа
+                        .response();
+        Map<String, String> allCoolies = response.getCookies();
+        System.out.println("allCookies--> " + allCoolies);
+
+        String someCookie = response.getCookie("1");
+        System.out.println("someCookies--> " + someCookie);
+    }
+
+    @Test
+    public void getHeadersFromResponse() {
+        Response response =
+                given()
+                        .spec(requestSpecificationForSwapiTests)
+                        .when()
+                        .get(SWAPI_PATH)
+                        .then()
+                        .extract()//вытаскиваем необходимые нам параметры из тела ответа
+                        .response();
+        Headers headers = response.getHeaders();
+        System.out.println("allHeaders--> \n" + headers);
+        String contentType = response.getHeader("Content-Type");
+        System.out.println("\nContent-Type --> " + contentType);
+    }
+
+
 }
