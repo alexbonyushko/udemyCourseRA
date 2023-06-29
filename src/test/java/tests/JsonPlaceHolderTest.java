@@ -1,5 +1,6 @@
+package tests;
+
 import config.TestConfig;
-import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.Test;
 
 import static constants.Constants.Actions.*;
