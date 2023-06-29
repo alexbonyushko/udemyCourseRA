@@ -30,7 +30,7 @@ public class GooglePlacesModel extends NetworkCore {
         //сам запрос и урл запроса
         requestSpecBuilder.setBaseUri(GOOGLE_PLACE_SERVER + GOOGLE_PLACE_PATH + GOOGLE_PLACE_ENDPOINT_SEARCH_JSON)
                 .addQueryParams(requestParams);
-        sendRequestAndGetResponse(Method.GET, 200);
+        sendRequestAndGetResponse(method, statusCode);
         return this;
     }
 }
