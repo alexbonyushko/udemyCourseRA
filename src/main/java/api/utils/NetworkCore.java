@@ -24,7 +24,7 @@ public class NetworkCore {
                 .parameters()
                 .when()
                 .request(method);
-        response.then().assertThat().statusCode(code);
+        response.then().log().body().assertThat().statusCode(code);
         //извлекаем объект из тела ответа
         try {
             responseBody = new JSONObject(response.getBody().asString());
